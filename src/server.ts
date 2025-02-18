@@ -12,8 +12,9 @@ import {
 import { z } from "zod";
 import {fastifySwagger} from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
-import { subscribeToEvent } from "./routes/subscribe-to-event";
+import { subscribeToEventRoute } from "./routes/subscribe-to-event-route";
 import { env } from "./env";
+import { accesInviteLinkRoute } from "./routes/access-invite-link-route";
 
 //confiura o server com fastify e especifica que vai lidar com o type provider do zod
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -25,7 +26,7 @@ app.setValidatorCompiler(validatorCompiler);
 app.register(fastifyCors, {
   //origin é o front que acessará a API
   //podemos deixar como true para nao restringir ninguem ou nao passar nenhum objeto
-  origin: "http://localhost:3000",
+  origin: true,
 });
 
 //configura a api para seguir o padrao openapi
@@ -45,7 +46,8 @@ app.register(fastifySwaggerUi, {
   routePrefix: '/docs'
 })
 
-app.register(subscribeToEvent)
+app.register(subscribeToEventRoute)
+app.register(accesInviteLinkRoute)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log("Executando o server na porta 8080");
