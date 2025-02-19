@@ -15,6 +15,10 @@ import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { subscribeToEventRoute } from "./routes/subscribe-to-event-route";
 import { env } from "./env";
 import { accesInviteLinkRoute } from "./routes/access-invite-link-route";
+import { getSubscriberInviteClicksRoute } from "./routes/get-subscriber-invite-clicks-route";
+import { getSubscriberInvitesCountRoute } from "./routes/get-subscriber-invites-count-route";
+import { getSubscriberRankPositionRoute } from "./routes/get-subscriber-rank-position-route";
+import { getRankingRoute } from "./routes/get-ranking-route";
 
 //confiura o server com fastify e especifica que vai lidar com o type provider do zod
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -48,6 +52,10 @@ app.register(fastifySwaggerUi, {
 
 app.register(subscribeToEventRoute)
 app.register(accesInviteLinkRoute)
+app.register(getSubscriberInviteClicksRoute)
+app.register(getSubscriberInvitesCountRoute)
+app.register(getSubscriberRankPositionRoute)
+app.register(getRankingRoute)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log("Executando o server na porta 8080");
